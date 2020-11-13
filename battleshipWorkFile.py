@@ -73,95 +73,130 @@ primShips = [[(0,0),(0,0),(0,0),(0,0),(0,0)],  #Carrier
           [(0,0),(0,0)]                     #Destroyer
     ]
 
-print("Enter ship you would like to place:")
+print('Enter the ship you would like to place, followed by the coordinates to place it (i.e. "Carrier A1 A5")')
 placing = (raw_input('> ')).lower()
+placing = placing.split(' ')
 
-if placing == 'carrier':
-    print('Placing Carrier. Enter starting letter coordinate:')
-    startLC = raw_input('> ')
-    print('Enter starting number coordinate:')
-    startNC = raw_input('> ')
+if placing[0] == 'carrier':
+    #print placing[1][0],placing[1][1] #start coordinates: "a, 1" 
+    #print placing[2][0],placing[2][1] #end coordinates: "a, 5"
 
-    startC = (startLC,startNC)
-    primShips[0][0] = startC
+    ind = (alphabet.lower()).find(placing[1][0]) + 1    #letter of start coordinate
+    ind2 = (alphabet.lower()).find(placing[2][0]) + 1   #letter of end coordinate
 
-    print('Enter ending letter coordinate:')
-    endLC = raw_input('> ')
-    print('Enter ending number coordinate:')
-    endNC = raw_input('> ')
+    #print ind,ind2
 
-    endC = (endLC,endNC)
-    primShips[0][4] = endC
+    primGrid[int(placing[1][1])][ind] = 'C'      #start coordinate
+    primGrid[int(placing[2][1])][ind2] = 'C'     #end coordinate
+
+    printH()
     
-elif placing == 'battleship':
-    print('Placing Battleship. Enter starting letter coordinate:')
-    startLC = raw_input('> ')
-    print('Enter starting number coordinate:')
-    startNC = raw_input('> ')
+elif placing[0] == 'battleship':
+    print placing[1][0],placing[1][1] # start coordinates
+    print placing[2][0],placing[2][1] # end coordinates
 
-    startC = (startLC,startNC)
-    primShips[1][0] = startC
-
-    print('Enter ending letter coordinate:')
-    endLC = raw_input('> ')
-    print('Enter starting number coordinate:')
-    endNC = raw_input('> ')
-
-    endC = (endLC,endNC)
-    primShips[1][3] = endC
     
-elif placing == 'cruiser':
-    print('Placing Cruiser. Enter starting letter coordinate:')
-    startLC = raw_input('> ')
-    print('Enter starting number coordinate:')
-    startNC = raw_input('> ')
+elif placing[0] == 'cruiser':
+    print placing[1][0],placing[1][1]
+    print placing[2][0],placing[2][1]
+elif placing[0] == 'submarine':
+    print placing[1][0],placing[1][1]
+    print placing[2][0],placing[2][1]
+elif placing[0] == 'destroyer':
+    print placing[1][0],placing[1][1]
+    print placing[2][0],placing[2][1]
 
-    startC = (startLC,startNC)
-    primShips[2][0] = startC
 
-    print('Enter ending letter coordinate:')
-    endLC = raw_input('> ')
-    print('Enter starting number coordinate:')
-    endNC = raw_input('> ')
-
-    endC = (endLC,endNC)
-    primShips[2][2] = endC
     
-elif placing == 'submarine':
-    print('Placing Submarine. Enter starting letter coordinate:')
-    startLC = raw_input('> ')
-    print('Enter starting number coordinate:')
-    startNC = raw_input('> ')
+##print("Enter ship you would like to place:")
+##placing = (raw_input('> ')).lower()
+##
+##if placing == 'carrier':
+##    print('Placing Carrier. Enter starting letter coordinate:')
+##    startLC = raw_input('> ')
+##    print('Enter starting number coordinate:')
+##    startNC = raw_input('> ')
+##
+##    startC = (startLC,startNC)
+##    primShips[0][0] = startC
+##
+##    print('Enter ending letter coordinate:')
+##    endLC = raw_input('> ')
+##    print('Enter ending number coordinate:')
+##    endNC = raw_input('> ')
+##
+##    endC = (endLC,endNC)
+##    primShips[0][4] = endC
+##    
+##elif placing == 'battleship':
+##    print('Placing Battleship. Enter starting letter coordinate:')
+##    startLC = raw_input('> ')
+##    print('Enter starting number coordinate:')
+##    startNC = raw_input('> ')
+##
+##    startC = (startLC,startNC)
+##    primShips[1][0] = startC
+##
+##    print('Enter ending letter coordinate:')
+##    endLC = raw_input('> ')
+##    print('Enter starting number coordinate:')
+##    endNC = raw_input('> ')
+##
+##    endC = (endLC,endNC)
+##    primShips[1][3] = endC
+##    
+##elif placing == 'cruiser':
+##    print('Placing Cruiser. Enter starting letter coordinate:')
+##    startLC = raw_input('> ')
+##    print('Enter starting number coordinate:')
+##    startNC = raw_input('> ')
+##
+##    startC = (startLC,startNC)
+##    primShips[2][0] = startC
+##
+##    print('Enter ending letter coordinate:')
+##    endLC = raw_input('> ')
+##    print('Enter starting number coordinate:')
+##    endNC = raw_input('> ')
+##
+##    endC = (endLC,endNC)
+##    primShips[2][2] = endC
+##    
+##elif placing == 'submarine':
+##    print('Placing Submarine. Enter starting letter coordinate:')
+##    startLC = raw_input('> ')
+##    print('Enter starting number coordinate:')
+##    startNC = raw_input('> ')
+##
+##    startC = (startLC,startNC)
+##    primShips[3][0] = startC
+##
+##    print('Enter ending letter coordinate:')
+##    endLC = raw_input('> ')
+##    print('Enter starting number coordinate:')
+##    endNC = raw_input('> ')
+##
+##    endC = (endLC,endNC)
+##    primShips[3][2] = endC
+##    
+##elif placing == 'destroyer':
+##    print('Placing Destroyer. Enter starting letter coordinate:')
+##    startLC = raw_input('> ')
+##    print('Enter starting number coordinate:')
+##    startNC = raw_input('> ')
+##
+##    startC = (startLC,startNC)
+##    primShips[4][0] = startC
+##
+##    print('Enter ending letter coordinate:')
+##    endLC = raw_input('> ')
+##    print('Enter starting number coordinate:')
+##    endNC = raw_input('> ')
+##
+##    endC = (endLC,endNC)
+##    primShips[4][1] = endC
+##else:
+##    print('Try again.')
 
-    startC = (startLC,startNC)
-    primShips[3][0] = startC
-
-    print('Enter ending letter coordinate:')
-    endLC = raw_input('> ')
-    print('Enter starting number coordinate:')
-    endNC = raw_input('> ')
-
-    endC = (endLC,endNC)
-    primShips[3][2] = endC
-    
-elif placing == 'destroyer':
-    print('Placing Destroyer. Enter starting letter coordinate:')
-    startLC = raw_input('> ')
-    print('Enter starting number coordinate:')
-    startNC = raw_input('> ')
-
-    startC = (startLC,startNC)
-    primShips[4][0] = startC
-
-    print('Enter ending letter coordinate:')
-    endLC = raw_input('> ')
-    print('Enter starting number coordinate:')
-    endNC = raw_input('> ')
-
-    endC = (endLC,endNC)
-    primShips[4][1] = endC
-else:
-    print('Try again.')
-
-for li in primShips:
-    print li
+##for li in primShips:
+##    print li
