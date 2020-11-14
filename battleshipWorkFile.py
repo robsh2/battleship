@@ -283,7 +283,10 @@ elif placing[0] == 'destroyer':
     
 
     print primShips[n]
+
+
     
+
 ##for li in primShips:
 ##    print li
 
