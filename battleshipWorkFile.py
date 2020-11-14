@@ -46,9 +46,6 @@ for i in range(1,length+1):
 for i in range(1,height+1):
     trackGrid[i][0] = i
 
-x = ''
-y = ''
-
 ships = {'Carrier':5,
           'Battleship':4,
           'Cruiser':3,
@@ -66,137 +63,230 @@ print("Cruiser: %d" % ships['Cruiser'])
 print("Submarine: %d" % ships['Submarine'])
 print("Destroyer: %d" % ships['Destroyer'])
 
-primShips = [[(0,0),(0,0),(0,0),(0,0),(0,0)],  #Carrier
-          [(0,0),(0,0),(0,0),(0,0)],        #Battleship
-          [(0,0),(0,0),(0,0)],              #Cruiser
-          [(0,0),(0,0),(0,0)],              #Submarine
-          [(0,0),(0,0)]                     #Destroyer
+primShips = [[(0,0),(0,0),(0,0),(0,0),(0,0)],   #Carrier        primShips[0][0...4]
+          [(0,0),(0,0),(0,0),(0,0)],            #Battleship     primShips[1][0...3]
+          [(0,0),(0,0),(0,0)],                  #Cruiser        primships[2][0...2]
+          [(0,0),(0,0),(0,0)],                  #Submarine      primShips[3][0...2]
+          [(0,0),(0,0)]                         #Destroyer      primShips[4][0...1]
     ]
 
 print('Enter the ship you would like to place, followed by the coordinates to place it (i.e. "Carrier A1 A5")')
 placing = (raw_input('> ')).lower()
 placing = placing.split(' ')
 
+#placing = 'carrier a1 a5'
+#placing[1][0] = a
+#placing[1][1] = 1
+#placing[2][0] = a
+#placing[2][1] = 5
+
 if placing[0] == 'carrier':
-    #print placing[1][0],placing[1][1] #start coordinates: "a, 1" 
-    #print placing[2][0],placing[2][1] #end coordinates: "a, 5"
+    ind = (alphabet.lower()).find(placing[1][0]) + 1    #index of letter in alphabet of first coordinate
+    ind2 = (alphabet.lower()).find(placing[2][0]) + 1   #index of letter in alphabet of second coordinate
 
-    ind = (alphabet.lower()).find(placing[1][0]) + 1    #letter of start coordinate
-    ind2 = (alphabet.lower()).find(placing[2][0]) + 1   #letter of end coordinate
+    firstCord = (ind,int(placing[1][1]))
+    secondCord = (ind2,int(placing[2][1]))
 
-    #print ind,ind2
+    #if ship is aligned vertically
+    ### MUST CHECK COORDINATES ARE 4 UNITS APART
+    if (firstCord[0] == secondCord[0]):
+        if (firstCord[1] < secondCord[1]):
+            primShips[0][0] = firstCord
+            primShips[0][-1] = secondCord
+        else:
+            primShips[0][0] = secondCord
+            primShips[0][-1] = firstCord
 
-    primGrid[int(placing[1][1])][ind] = 'C'      #start coordinate
-    primGrid[int(placing[2][1])][ind2] = 'C'     #end coordinate
+        primShips[0][1] = (primShips[0][0][0],primShips[0][0][1]+1)
+        primShips[0][2] = (primShips[0][0][0],primShips[0][0][1]+2)
+        primShips[0][3] = (primShips[0][0][0],primShips[0][0][1]+3)
+            
+    #if ship is aligned horizontally
+    ### MUST CHECK COORDINATES ARE 4 UNITS APART
+    elif (firstCord[1] == secondCord[1]):
+        if (firstCord[0] < secondCord[0]):
+            primShips[0][0] = firstCord
+            primShips[0][-1] = secondCord
+        else:
+            primShips[0][0] = secondCord
+            primShips[0][-1] = firstCord
 
-    printH()
+        primShips[0][1] = (primShips[0][0][0]+1,primShips[0][0][1])
+        primShips[0][2] = (primShips[0][0][0]+2,primShips[0][0][1])
+        primShips[0][3] = (primShips[0][0][0]+3,primShips[0][0][1])
+            
+    #error: ship not aligned straight         
+    else:
+        print("Error: ship must be placed vertically or horizontally.")
+    
+
+    print primShips[0]
+
+##    printH()
     
 elif placing[0] == 'battleship':
-    print placing[1][0],placing[1][1] # start coordinates
-    print placing[2][0],placing[2][1] # end coordinates
+    n = 1
+    ind = (alphabet.lower()).find(placing[1][0]) + 1    #index of letter in alphabet of first coordinate
+    ind2 = (alphabet.lower()).find(placing[2][0]) + 1   #index of letter in alphabet of second coordinate
 
+    firstCord = (ind,int(placing[1][1]))
+    secondCord = (ind2,int(placing[2][1]))
+
+    #if ship is aligned vertically
+    ### MUST CHECK COORDINATES ARE 3 UNITS APART
+    if (firstCord[0] == secondCord[0]):
+        if (firstCord[1] < secondCord[1]):
+            primShips[n][0] = firstCord
+            primShips[n][-1] = secondCord
+        else:
+            primShips[n][0] = secondCord
+            primShips[n][-1] = firstCord
+
+        primShips[n][1] = (primShips[n][0][0],primShips[n][0][1]+1)
+        primShips[n][2] = (primShips[n][0][0],primShips[n][0][1]+2)
+            
+    #if ship is aligned horizontally
+    ### MUST CHECK COORDINATES ARE 3 UNITS APART
+    elif (firstCord[1] == secondCord[1]):
+        if (firstCord[0] < secondCord[0]):
+            primShips[n][0] = firstCord
+            primShips[n][-1] = secondCord
+        else:
+            primShips[n][0] = secondCord
+            primShips[n][-1] = firstCord
+
+        primShips[n][1] = (primShips[n][0][0]+1,primShips[n][0][1])
+        primShips[n][2] = (primShips[n][0][0]+2,primShips[n][0][1])
+            
+    #error: ship not aligned straight         
+    else:
+        print("Error: ship must be placed vertically or horizontally.")
     
+
+    print primShips[n]
+
+        
 elif placing[0] == 'cruiser':
-    print placing[1][0],placing[1][1]
-    print placing[2][0],placing[2][1]
-elif placing[0] == 'submarine':
-    print placing[1][0],placing[1][1]
-    print placing[2][0],placing[2][1]
-elif placing[0] == 'destroyer':
-    print placing[1][0],placing[1][1]
-    print placing[2][0],placing[2][1]
+    n = 2
+    ind = (alphabet.lower()).find(placing[1][0]) + 1    #index of letter in alphabet of first coordinate
+    ind2 = (alphabet.lower()).find(placing[2][0]) + 1   #index of letter in alphabet of second coordinate
 
+    firstCord = (ind,int(placing[1][1]))
+    secondCord = (ind2,int(placing[2][1]))
 
+    #if ship is aligned vertically
+    ### MUST CHECK COORDINATES ARE 2 UNITS APART
+    if (firstCord[0] == secondCord[0]):
+        if (firstCord[1] < secondCord[1]):
+            primShips[n][0] = firstCord
+            primShips[n][-1] = secondCord
+        else:
+            primShips[n][0] = secondCord
+            primShips[n][-1] = firstCord
+
+        primShips[n][1] = (primShips[n][0][0],primShips[n][0][1]+1)
+        primShips[n][2] = (primShips[n][0][0],primShips[n][0][1]+2)
+            
+    #if ship is aligned horizontally
+    ### MUST CHECK COORDINATES ARE 2 UNITS APART
+    elif (firstCord[1] == secondCord[1]):
+        if (firstCord[0] < secondCord[0]):
+            primShips[n][0] = firstCord
+            primShips[n][-1] = secondCord
+        else:
+            primShips[n][0] = secondCord
+            primShips[n][-1] = firstCord
+
+        primShips[n][1] = (primShips[n][0][0]+1,primShips[n][0][1])
+            
+    #error: ship not aligned straight         
+    else:
+        print("Error: ship must be placed vertically or horizontally.")
     
-##print("Enter ship you would like to place:")
-##placing = (raw_input('> ')).lower()
-##
-##if placing == 'carrier':
-##    print('Placing Carrier. Enter starting letter coordinate:')
-##    startLC = raw_input('> ')
-##    print('Enter starting number coordinate:')
-##    startNC = raw_input('> ')
-##
-##    startC = (startLC,startNC)
-##    primShips[0][0] = startC
-##
-##    print('Enter ending letter coordinate:')
-##    endLC = raw_input('> ')
-##    print('Enter ending number coordinate:')
-##    endNC = raw_input('> ')
-##
-##    endC = (endLC,endNC)
-##    primShips[0][4] = endC
-##    
-##elif placing == 'battleship':
-##    print('Placing Battleship. Enter starting letter coordinate:')
-##    startLC = raw_input('> ')
-##    print('Enter starting number coordinate:')
-##    startNC = raw_input('> ')
-##
-##    startC = (startLC,startNC)
-##    primShips[1][0] = startC
-##
-##    print('Enter ending letter coordinate:')
-##    endLC = raw_input('> ')
-##    print('Enter starting number coordinate:')
-##    endNC = raw_input('> ')
-##
-##    endC = (endLC,endNC)
-##    primShips[1][3] = endC
-##    
-##elif placing == 'cruiser':
-##    print('Placing Cruiser. Enter starting letter coordinate:')
-##    startLC = raw_input('> ')
-##    print('Enter starting number coordinate:')
-##    startNC = raw_input('> ')
-##
-##    startC = (startLC,startNC)
-##    primShips[2][0] = startC
-##
-##    print('Enter ending letter coordinate:')
-##    endLC = raw_input('> ')
-##    print('Enter starting number coordinate:')
-##    endNC = raw_input('> ')
-##
-##    endC = (endLC,endNC)
-##    primShips[2][2] = endC
-##    
-##elif placing == 'submarine':
-##    print('Placing Submarine. Enter starting letter coordinate:')
-##    startLC = raw_input('> ')
-##    print('Enter starting number coordinate:')
-##    startNC = raw_input('> ')
-##
-##    startC = (startLC,startNC)
-##    primShips[3][0] = startC
-##
-##    print('Enter ending letter coordinate:')
-##    endLC = raw_input('> ')
-##    print('Enter starting number coordinate:')
-##    endNC = raw_input('> ')
-##
-##    endC = (endLC,endNC)
-##    primShips[3][2] = endC
-##    
-##elif placing == 'destroyer':
-##    print('Placing Destroyer. Enter starting letter coordinate:')
-##    startLC = raw_input('> ')
-##    print('Enter starting number coordinate:')
-##    startNC = raw_input('> ')
-##
-##    startC = (startLC,startNC)
-##    primShips[4][0] = startC
-##
-##    print('Enter ending letter coordinate:')
-##    endLC = raw_input('> ')
-##    print('Enter starting number coordinate:')
-##    endNC = raw_input('> ')
-##
-##    endC = (endLC,endNC)
-##    primShips[4][1] = endC
-##else:
-##    print('Try again.')
 
+    print primShips[n]
+    
+elif placing[0] == 'submarine':
+    n = 3
+    ind = (alphabet.lower()).find(placing[1][0]) + 1    #index of letter in alphabet of first coordinate
+    ind2 = (alphabet.lower()).find(placing[2][0]) + 1   #index of letter in alphabet of second coordinate
+
+    firstCord = (ind,int(placing[1][1]))
+    secondCord = (ind2,int(placing[2][1]))
+
+    #if ship is aligned vertically
+    ### MUST CHECK COORDINATES ARE 2 UNITS APART
+    if (firstCord[0] == secondCord[0]):
+        if (firstCord[1] < secondCord[1]):
+            primShips[n][0] = firstCord
+            primShips[n][-1] = secondCord
+        else:
+            primShips[n][0] = secondCord
+            primShips[n][-1] = firstCord
+
+        primShips[n][1] = (primShips[n][0][0],primShips[n][0][1]+1)
+        primShips[n][2] = (primShips[n][0][0],primShips[n][0][1]+2)
+            
+    #if ship is aligned horizontally
+    ### MUST CHECK COORDINATES ARE 2 UNITS APART
+    elif (firstCord[1] == secondCord[1]):
+        if (firstCord[0] < secondCord[0]):
+            primShips[n][0] = firstCord
+            primShips[n][-1] = secondCord
+        else:
+            primShips[n][0] = secondCord
+            primShips[n][-1] = firstCord
+
+        primShips[n][1] = (primShips[n][0][0]+1,primShips[n][0][1])
+            
+    #error: ship not aligned straight         
+    else:
+        print("Error: ship must be placed vertically or horizontally.")
+    
+
+    print primShips[n]
+    
+elif placing[0] == 'destroyer':
+    n = 4
+    ind = (alphabet.lower()).find(placing[1][0]) + 1    #index of letter in alphabet of first coordinate
+    ind2 = (alphabet.lower()).find(placing[2][0]) + 1   #index of letter in alphabet of second coordinate
+
+    firstCord = (ind,int(placing[1][1]))
+    secondCord = (ind2,int(placing[2][1]))
+
+    #if ship is aligned vertically
+    ### MUST CHECK COORDINATES ARE 1 UNITS APART
+    if (firstCord[0] == secondCord[0]):
+        if (firstCord[1] < secondCord[1]):
+            primShips[n][0] = firstCord
+            primShips[n][-1] = secondCord
+        else:
+            primShips[n][0] = secondCord
+            primShips[n][-1] = firstCord
+
+        primShips[n][1] = (primShips[n][0][0],primShips[n][0][1]+1)
+        primShips[n][2] = (primShips[n][0][0],primShips[n][0][1]+2)
+            
+    #if ship is aligned horizontally
+    ### MUST CHECK COORDINATES ARE 1 UNITS APART
+    elif (firstCord[1] == secondCord[1]):
+        if (firstCord[0] < secondCord[0]):
+            primShips[n][0] = firstCord
+            primShips[n][-1] = secondCord
+        else:
+            primShips[n][0] = secondCord
+            primShips[n][-1] = firstCord
+            
+    #error: ship not aligned straight         
+    else:
+        print("Error: ship must be placed vertically or horizontally.")
+    
+
+    print primShips[n]
+    
 ##for li in primShips:
 ##    print li
+
+
+
+
