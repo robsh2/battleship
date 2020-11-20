@@ -45,11 +45,15 @@ def place(n):
             primShips[n][-1] = firstCord
 
         #STUCTURE OF PRIMSHIPS: primShips [ship type]                  [coordinate set]      [coordinate]
-        #                       primShips ['carrier'/'battleship'/ETC] [('A',1),('A',2),ETC] ['A'/1]
-        if ((placing[0] == 'carrier') or (placing[0] == 'battleship') or (placing[0] == 'cruiser') or (placing[0] == 'submarine')):
+        #                       primShips ['carrier'/'battleship'/ETC] [('A',1),('A',2),ETC] ['A' or 1]
+        if ((placing[0] == 'carrier') or (placing[0] == 'battleship')
+            or (placing[0] == 'cruiser') or (placing[0] == 'submarine')):
+
             primShips[n][1] = (primShips[n][0][0],primShips[n][0][1]+1)
+    
             if ((placing[0] == 'carrier') or (placing[0] == 'battleship')):
                 primShips[n][2] = (primShips[n][0][0],primShips[n][0][1]+2)
+
                 if (placing[0] == 'carrier'):
                     primShips[n][3] = (primShips[n][0][0],primShips[n][0][1]+3)
                     
@@ -66,11 +70,15 @@ def place(n):
 
 
         #STUCTURE OF PRIMSHIPS: primShips [ship type]                  [coordinate set]      [coordinate]
-        #                       primShips ['carrier'/'battleship'/ETC] [('A',1),('A',2),ETC] ['A'/1]
-        if ((placing[0] == 'carrier') or (placing[0] == 'battleship') or (placing[0] == 'cruiser') or (placing[0] == 'submarine')):
+        #                       primShips ['carrier'/'battleship'/ETC] [('A',1),('A',2),ETC] ['A' or 1]
+        if ((placing[0] == 'carrier') or (placing[0] == 'battleship')
+            or (placing[0] == 'cruiser') or (placing[0] == 'submarine')):
+
             primShips[n][1] = (primShips[n][0][0]+1,primShips[n][0][1])
+
             if ((placing[0] == 'carrier') or (placing[0] == 'battleship')):
                 primShips[n][2] = (primShips[n][0][0]+2,primShips[n][0][1])
+
                 if (placing[0] == 'carrier'):
                     primShips[n][3] = (primShips[n][0][0]+3,primShips[n][0][1])
             
@@ -133,43 +141,53 @@ primShips = [[(0,0),(0,0),(0,0),(0,0),(0,0)],   #Carrier        primShips[0][0..
           [(0,0),(0,0)]                         #Destroyer      primShips[4][0...1]
     ]
 
-print('Enter the ship you would like to place, followed by the coordinates to place it (i.e. "Carrier A1 A5")')
-placing = (raw_input('> ')).lower()
-placing = placing.split(' ')
 
-#placing = 'carrier a1 a5'
-#placing[0] ~> 'carrier'
-#placing[1] ~> 'a1'
-#placing[2] ~> 'a5'
-#placing[1][0] ~> 'a'
-#placing[1][1] ~> '1'
-#placing[2][0] ~> 'a'
-#placing[2][1] ~> '5'
+donePlacingShips = False
+while (donePlacingShips == False):
 
-if placing[0] == 'carrier':
-    place(0)    
-elif placing[0] == 'battleship':
-    place(1)
-elif placing[0] == 'cruiser':
-    place(2)
-elif placing[0] == 'submarine':
-    place(3)
-elif placing[0] == 'destroyer':
-    place(4)
+    print('Enter the ship you would like to place, followed by the coordinates to place it (i.e. "Carrier A1 A5")')
+    placing = (raw_input('> ')).lower()
+    placing = placing.split(' ')
+    if placing[0] == 'carrier':
+        place(0)
+        
+    elif placing[0] == 'battleship':
+        place(1)
 
-for (x,y) in primShips[0]:
-    #prints correctly when x and y are in opposite arrangements
-    primGrid[y][x] = 'C'
-for (x,y) in primShips[1]:
-    primGrid[y][x] = 'B'
-for (x,y) in primShips[2]:
-    primGrid[y][x] = 'C'
-for (x,y) in primShips[3]:
-    primGrid[y][x] = 'S'
-for (x,y) in primShips[4]:
-    primGrid[y][x] = 'D'
+    elif placing[0] == 'cruiser':
+        place(2)
+       
+    elif placing[0] == 'submarine':
+        place(3)
+        
+    elif placing[0] == 'destroyer':
+        place(4)
+        
+    else:
+        print('Try again.')
 
-printH()
+    donePlacingShips = True
+    for ship in primShips:
+        for cordSet in ship:
+            if cordSet == (0,0):
+                donePlacingShips = False
+                #if any cord set is (0,0) then it means the ship has not been placed yet.
+                
+    
+
+    for (x,y) in primShips[0]:
+        #prints correctly when x and y are in opposite arrangements
+        primGrid[y][x] = 'C'
+    for (x,y) in primShips[1]:
+        primGrid[y][x] = 'B'
+    for (x,y) in primShips[2]:
+        primGrid[y][x] = 'C'
+    for (x,y) in primShips[3]:
+        primGrid[y][x] = 'S'
+    for (x,y) in primShips[4]:
+        primGrid[y][x] = 'D'
+
+    printH()
 
 ##for (x,y) in primShips[0]:
 ##    print(alphabet[])
