@@ -18,6 +18,16 @@ def printV(): #functions printing out the boards vertically stacked
     return
 
 def place(n):
+    #STRUCTURE OF USER INPUT VARIABLE <placing>:
+    #placing        =      'carrier     a1      a5'
+    #placing[0]     ~>     'carrier'
+    #placing[1]     ~>                 'a1'
+    #placing[2]     ~>                         'a5'
+    #placing[1][0]  ~>                 'a'
+    #placing[1][1]  ~>                  '1'
+    #placing[2][0]  ~>                         'a'
+    #placing[2][1]  ~>                          '5'
+    
     ind = (alphabet.lower()).find(placing[1][0]) + 1    #index of letter in alphabet of first coordinate
     ind2 = (alphabet.lower()).find(placing[2][0]) + 1   #index of letter in alphabet of second coordinate
 
@@ -34,6 +44,8 @@ def place(n):
             primShips[n][0] = secondCord
             primShips[n][-1] = firstCord
 
+        #STUCTURE OF PRIMSHIPS: primShips [ship type]                  [coordinate set]      [coordinate]
+        #                       primShips ['carrier'/'battleship'/ETC] [('A',1),('A',2),ETC] ['A'/1]
         if ((placing[0] == 'carrier') or (placing[0] == 'battleship') or (placing[0] == 'cruiser') or (placing[0] == 'submarine')):
             primShips[n][1] = (primShips[n][0][0],primShips[n][0][1]+1)
             if ((placing[0] == 'carrier') or (placing[0] == 'battleship')):
@@ -52,6 +64,9 @@ def place(n):
             primShips[n][0] = secondCord
             primShips[n][-1] = firstCord
 
+
+        #STUCTURE OF PRIMSHIPS: primShips [ship type]                  [coordinate set]      [coordinate]
+        #                       primShips ['carrier'/'battleship'/ETC] [('A',1),('A',2),ETC] ['A'/1]
         if ((placing[0] == 'carrier') or (placing[0] == 'battleship') or (placing[0] == 'cruiser') or (placing[0] == 'submarine')):
             primShips[n][1] = (primShips[n][0][0]+1,primShips[n][0][1])
             if ((placing[0] == 'carrier') or (placing[0] == 'battleship')):
@@ -64,7 +79,6 @@ def place(n):
         print("Error: ship must be placed vertically or horizontally.")
     
 
-    print primShips[n]
 
 ##if (len(sys.argv) != 2): ## DOESNT WORK
 ##    print('battleship.py: Two arguments must be given (int m, int n)')
@@ -142,6 +156,20 @@ elif placing[0] == 'submarine':
     place(3)
 elif placing[0] == 'destroyer':
     place(4)
+
+for (x,y) in primShips[0]:
+    #prints correctly when x and y are in opposite arrangements
+    primGrid[y][x] = 'C'
+for (x,y) in primShips[1]:
+    primGrid[y][x] = 'B'
+for (x,y) in primShips[2]:
+    primGrid[y][x] = 'C'
+for (x,y) in primShips[3]:
+    primGrid[y][x] = 'S'
+for (x,y) in primShips[4]:
+    primGrid[y][x] = 'D'
+
+printH()
 
 ##for (x,y) in primShips[0]:
 ##    print(alphabet[])
