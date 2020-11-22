@@ -2,6 +2,10 @@ import sys
 import re
 import random
 
+##############################################
+## FUNCTION: PRINT GRIDS HORIZONTALLY
+##############################################
+
 def printH(): #function printing out the boards side by size horizontally
     print('Primary Grid:\t\t\tTracking Grid:')
     primGrid[0][0] = '\\'
@@ -10,6 +14,11 @@ def printH(): #function printing out the boards side by size horizontally
         print(' '.join(str(spot) for spot in primGrid[i])),'\t',
         print(' '.join(str(spot) for spot in trackGrid[i]))
     return
+
+
+##############################################
+## FUNCTION: PRINT GRIDS VERTICALLY
+##############################################
 
 def printV(): #functions printing out the boards vertically stacked
     print("\nPrimary Grid:")
@@ -25,7 +34,11 @@ def printV(): #functions printing out the boards vertically stacked
     print '\n'
     return
 
-def place(n): #function used to place primary grid's ships
+##############################################
+## FUNCTION: PLACE SHIPS ON PRIMARY GRID
+##############################################
+
+def place(n): 
     #STRUCTURE OF USER INPUT VARIABLE placing:
     #placing        =      'carrier     a1      a5'
     #placing[0]     ~>     'carrier'
@@ -96,6 +109,56 @@ def place(n): #function used to place primary grid's ships
     #error: ship not aligned straight         
     else:
         print("Error: ship must be placed vertically or horizontally.")
+
+##############################################
+## FUNCTION: GENERATE TRACKING GRID SHIPS
+##############################################
+def genShip(n):
+    alphaCord = random.randrange(1,length+1)
+    numCord = random.randrange(1,height+1)
+
+    flip = random.randrange(0,2) #50/50 chance to determing if ship is vertical or horizontal
+
+    if flip == 0:
+        
+        for i in range(0,lengths[n]):
+            trackShips[n][i] = (alphaCord+i,numCord)
+
+        overlap = False
+
+ 
+        for (x,y) in trackShips[n]:
+            for m in range(0,5):
+                    if (x,y) in trackShips[m]:
+                        if (n != m): overlap = True
+                    
+
+        if ((alphaCord+lengths[n]-1) in xrange) and (overlap == False):
+            for (x,y) in trackShips[n]:
+                trackGrid[y][x] = labels[n]
+        else: genShip(n)
+
+    else:
+        
+        for i in range(0,lengths[n]):
+            trackShips[n][i] = (alphaCord,numCord+i)
+
+        overlap = False
+
+ 
+        for (x,y) in trackShips[n]:
+            for m in range(0,5):
+                    if (x,y) in trackShips[m]:
+                        if (n != m): overlap = True
+
+        if ((numCord+lengths[n]-1) in yrange) and (overlap == False):
+            for (x,y) in trackShips[n]:
+                trackGrid[y][x] = labels[n]
+        else: genShip(n)
+
+################################################
+################ END OF FUNCTIONS ##############
+################################################
     
 ##if (len(sys.argv) != 2): ## DOESNT WORK
 ##    print('battleship.py: Two arguments must be given (int m, int n)')
@@ -118,7 +181,7 @@ for i in range(1,height+1):
     primGrid[i][0] = i
 
 ##<<initializing the computer's board
-trackGrid = [['?' for x in range(length+1)] for y in range(height+1)]
+trackGrid = [['-' for x in range(length+1)] for y in range(height+1)]
 
 #labeling tracking grid's axis
 for i in range(1,length+1):
@@ -126,7 +189,7 @@ for i in range(1,length+1):
 for i in range(1,height+1):
     trackGrid[i][0] = i
 
-printH()
+#printH()
 
 ##<<< SHIP PLACEMENT >>>
 ## NOTE:    Must still check if ships placed are of correct length.
@@ -196,7 +259,30 @@ while (donePlacingShips == False):
     if 3 not in placed: print "1 Submarine. ",
     if 4 not in placed: print "1 Destroyer. ",
     print '\n'
+
+print 'All ships placed! Placing enemy ships...\n'
 ### DONE PLACING PRIMARY GRID SHIPS.
 ### STARTING TRACKING GRID SHIP PLACEMENT
 
+trackShips = [
+    [(0,0),(0,0),(0,0),(0,0),(0,0)],        #Carrier        trackShips[0][0...4]
+    [(0,0),(0,0),(0,0),(0,0)],              #Battleship     trackShips[1][0...3]
+    [(0,0),(0,0),(0,0)],                    #Cruiser        trackShips[2][0...2]
+    [(0,0),(0,0),(0,0)],                    #Submarine      trackShips[3][0...2]
+    [(0,0),(0,0)]                           #Destroyer      trackShips[4][0...1]
+    ]
 
+lengths = [5,4,3,3,2]
+labels  = ['C','B','c','S','D']
+xrange = range(1,length+1)
+yrange = range(1,height+1)
+
+for n in range(0,5):
+    genShip(n)
+
+printH()
+
+
+
+
+    
