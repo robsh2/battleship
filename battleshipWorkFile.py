@@ -25,13 +25,13 @@ def printV(): #functions printing out the boards vertically stacked
     primGrid[0][0] = '\\'
     for row in primGrid:
         print(' '.join(str(spot) for spot in row))
-    print '\n'
+    print ('\n')
 
     print("\nTracking Grid:")
     trackGrid[0][0] = '\\'
     for row in trackGrid:
         print (' '.join(str(spot) for spot in row))
-    print '\n'
+    print ('\n')
     return
 
 ##############################################
@@ -123,11 +123,11 @@ def primPlacement(primShips):
     ## << PRIMARY GRID >>
 
     donePlacingShips = False #SET TO TRUE WHILE TESTING TO SKIP PRIM GRID PLACEMENT
-    print '\nYour fleet: 1 Carrier. 1 Battleship. 1 Cruiser. 1 Submarine. 1 Destroyer.'
+    print ('\nYour fleet: 1 Carrier. 1 Battleship. 1 Cruiser. 1 Submarine. 1 Destroyer.')
     while (donePlacingShips == False):
 
         print('Enter the ship you would like to place, followed by the coordinates to place it (i.e. "Carrier A1 A5")')
-        placing = (raw_input('> ')).lower()
+        placing = (input('> ')).lower()
         placing = placing.split(' ')
         if placing[0] == 'carrier':
             place(0, placing, primShips)
@@ -168,12 +168,12 @@ def primPlacement(primShips):
 
         printH()
 
-        if 0 not in placed: print "1 Carrier. ",
-        if 1 not in placed: print "1 Battleship. ",
-        if 2 not in placed: print "1 Cruiser. ",
-        if 3 not in placed: print "1 Submarine. ",
-        if 4 not in placed: print "1 Destroyer. ",
-        print '\n'
+        if 0 not in placed: print ("1 Carrier. "),
+        if 1 not in placed: print ("1 Battleship. "),
+        if 2 not in placed: print ("1 Cruiser. "),
+        if 3 not in placed: print ("1 Submarine. "),
+        if 4 not in placed: print ("1 Destroyer. "),
+        print ('\n')
 
 ##############################################
 ## FUNCTION: GENERATE TRACKING GRID SHIPS
@@ -221,9 +221,29 @@ def genShip(n):
 ################ END OF FUNCTIONS ##############
 ################################################
     
-##if (len(sys.argv) != 2): ## DOESNT WORK
-##    print('battleship.py: Two arguments must be given (int m, int n)')
-##    sys.exit() 
+if len(sys.argv) != 3:
+    print('battleship.py: Two arguments must be given (int m, int n)' , file=sys.stderr)
+    sys.exit()
+try: 
+    for arg in sys.argv[1:]:
+        number = int(arg)
+        if number < 9:
+            print ('Argument', number, 'is less than 9')
+        else:
+            pass
+except:
+    print ('The first argument contains an integer less than 9')
+    
+try: 
+    for arg in sys.argv[2:]:
+        number = int(arg)
+        if number < 9:
+            print ('Argument 2', number, 'is less than 9')
+        else:
+            pass
+except:
+    print ('The first argument contains an integer less than 9')
+
 
 print("Welcome to Battleship!")
 length = int(sys.argv[1])
@@ -267,7 +287,7 @@ primShips = [[(0,0),(0,0),(0,0),(0,0),(0,0)],       #Carrier        primShips[0]
 #placing primary grid ships from player input
 #primPlacement(primShips)
 
-print 'All ships placed! Placing enemy ships...\n'
+print ('All ships placed! Placing enemy ships...\n')
 ### DONE PLACING PRIMARY GRID SHIPS.
 ### STARTING TRACKING GRID SHIP PLACEMENT
 
@@ -293,7 +313,7 @@ printH()
 
 def getGuess():
     print('Enter enemy coordinates to attack (i.e. "D6")')
-    guess = (raw_input('> ')).lower()
+    guess = (input('> ')).lower()
 
     alph = (alphabet.lower()).find(guess[0]) + 1    #index of letter in alphabet of first coordinate
     
@@ -304,7 +324,7 @@ def getGuess():
     guessCord = (alph,num)
 
     if (alph not in yrange) or (num not in xrange):
-        print 'Invalid guess. Try again.'
+        print ('Invalid guess. Try again.')
         guessCord = getGuess()
         
   
@@ -322,9 +342,9 @@ def round(trackShips, primShips):
                 hitFlag = True
 
     if (hitFlag == True):
-        print 'Hit!'
+        print ('Hit!')
     else:
-        print 'Miss!'
+        print ('Miss!')
 
     printH()
 
